@@ -13,6 +13,7 @@ namespace source
             string playerAnswer;
             string correctAnswer;
             int totalRounds;
+            int correctQuestions = 0;
             int currentRound = 1;
             int questionNum;
             Random r = new Random();
@@ -23,14 +24,31 @@ namespace source
                 "Does Python contain switch statements?",
                 "True or false: printf('Hello World!') works in C#.",
                 "Who developed Visual Studio Code?",
+                "How do you declare an integer with no value in C#?",
+                "When did PHP 8 release?",
+                "True or false: C++ is object oriented while C isn't.",
             };
-            string[] answers =
+            string[] comparedAnswers =
             {
                 "false",
                 "1970s",
                 "no",
                 "false",
                 "microsoft",
+                "int integername;",
+                "november 26 2020",
+                "true",
+            };
+            string[] displayedAnswers = // we have 2 lists with answers so we don't display an answer in all lowercase.
+            {
+                "False",
+                "1970s",
+                "No",
+                "False",
+                "Microsoft",
+                "'int', then the integer's name, then ';'",
+                "November 26, 2020",
+                "True",
             };
 
             // title screen
@@ -63,17 +81,18 @@ namespace source
                 Console.WriteLine("Question " + currentRound + ": " + questions[questionNum]); // prints question num and the question
                 playerAnswer = Convert.ToString(Console.ReadLine());
 
-                correctAnswer = answers[questionNum];
+                correctAnswer = comparedAnswers[questionNum];
                 playerAnswer = playerAnswer.ToLower(); // lowercase so answers aren't marked wrong because of uppercase
 
                 if (playerAnswer.Contains(correctAnswer))// this is so the user gets a question right if their answer contains the right one
                 {
                     Console.WriteLine("That's the correct answer, " + playerName + "!");
+                    correctQuestions++;
                 }
                 else
                 {
                    Console.WriteLine("Sorry, " + playerName + ", that isn't the right answer.");
-                   Console.WriteLine("The correct answer was " + correctAnswer + ".");
+                   Console.WriteLine("The correct answer was " + displayedAnswers[questionNum] + ".");
                 }
 
                 Console.WriteLine("Press any key to proceed.");
@@ -82,6 +101,13 @@ namespace source
                 currentRound++;
 
             };
+            
+            // ending game
+            Console.Clear();
+            Console.WriteLine("The game's over, " + playerName + ".");
+            Console.WriteLine("In total, you got " + correctQuestions + " questions right.");
+            Console.WriteLine("We hope you had fun playing Terminal Knowledge! See you soon! (hopefully...)");
+            Console.WriteLine("Press any key to end the game.");
 
             Console.ReadKey(); // instaclose prevention
         }

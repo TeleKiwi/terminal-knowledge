@@ -8,7 +8,7 @@ namespace source
         {   
             // init
             Console.Title = "Terminal Knowledge!";
-            double versionNum = 0.2;
+            string versionNum = "0.2.1";
             string playerName;
             string playerAnswer;
             string correctAnswer;
@@ -78,6 +78,7 @@ namespace source
 
                 Console.WriteLine("Press any key to proceed.");
                 Console.ReadKey();
+                Console.Clear();
                 currentRound++;
 
             };

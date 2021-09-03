@@ -3,12 +3,32 @@
 namespace source
 {
     class Program
-    {   
+    {    
+        public static int oppPoints = 0;
+        public static Random oppR = new Random();
+        public static int GotQCorrect;
+        public static string[] opponentNames =
+        {
+            "Andrew",
+            "Fred",
+            "James",
+            "Sofia",
+            "Amy",
+            "Julia",
+            "David",
+            "Matthew",
+            "Archie",
+            "Emily",
+            "Chloe",
+            // TODO: add more names
+        };
+        public static string oppName;
+
         static void Main(string[] args)
         {   
             // init
             Console.Title = "Terminal Knowledge!";
-            string versionNum = "0.2.1";
+            string versionNum = "0.3";
             string playerName;
             string playerAnswer;
             string correctAnswer;
@@ -27,6 +47,7 @@ namespace source
                 "How do you declare an integer with no value in C#?",
                 "When did PHP 8 release?",
                 "True or false: C++ is object oriented while C isn't.",
+                // TODO: add more questions
             };
             string[] comparedAnswers =
             {
@@ -70,7 +91,9 @@ namespace source
             totalRounds = Convert.ToInt16(Console.ReadLine()); // sets total rounds to player input
 
             Console.Clear();
+            GenOpponentName();
             Console.WriteLine("That's enough setup.");
+            Console.WriteLine("You'll be going up against " + oppName + ".");
             Console.WriteLine("Now, let's get started, eh?");
             Console.WriteLine("Press any key to begin, " + playerName + ".");
 
@@ -84,7 +107,7 @@ namespace source
                 correctAnswer = comparedAnswers[questionNum];
                 playerAnswer = playerAnswer.ToLower(); // lowercase so answers aren't marked wrong because of uppercase
 
-                if (playerAnswer.Contains(correctAnswer))// this is so the user gets a question right if their answer contains the right one
+                if (playerAnswer.Contains(correctAnswer))// this is so the user gets points even if they include more than what is required
                 {
                     Console.WriteLine("That's the correct answer, " + playerName + "!");
                     correctQuestions++;
@@ -93,7 +116,10 @@ namespace source
                 {
                    Console.WriteLine("Sorry, " + playerName + ", that isn't the right answer.");
                    Console.WriteLine("The correct answer was " + displayedAnswers[questionNum] + ".");
+                   correctQuestions--;
                 }
+
+                GradeOpponent();
 
                 Console.WriteLine("Press any key to proceed.");
                 Console.ReadKey();
@@ -105,12 +131,54 @@ namespace source
             // ending game
             Console.Clear();
             Console.WriteLine("The game's over, " + playerName + ".");
-            Console.WriteLine("In total, you got " + correctQuestions + " questions right.");
+            Console.WriteLine("Time to announce the winner!");
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+            
+            Console.WriteLine("And.....");
+            if(oppPoints > correctQuestions)
+            {
+                Console.WriteLine(oppName + " wins! Sorry, " + playerName + ", better luck next time.");
+            }
+            else if(oppPoints < correctQuestions)
+            {
+                Console.WriteLine(playerName + " wins! Congratulations!");
+            }
+            else
+            {
+                Console.WriteLine("It's a tie! Unbelieveable! You don't see that everyday.");
+            }
+            Console.WriteLine("Press any key to continue.");
+            Console.ReadKey();
+            
             Console.WriteLine("We hope you had fun playing Terminal Knowledge! See you soon! (hopefully...)");
             Console.WriteLine("Press any key to end the game.");
 
             Console.ReadKey(); // instaclose prevention
         }
-    }      
-}
 
+        static void GradeOpponent()
+        {    
+            GotQCorrect = oppR.Next(0, 1);
+            
+            if (GotQCorrect == 1)
+            {
+                oppPoints++;
+            }
+            else
+            {
+                oppPoints--;
+            }
+
+        }
+
+        static void GenOpponentName()
+        {
+            Random genR = new Random();
+            int temp;
+
+            temp = genR.Next(1, opponentNames.Length);
+            oppName = opponentNames[temp];
+        }
+    }
+}

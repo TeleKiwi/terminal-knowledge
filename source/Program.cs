@@ -160,8 +160,10 @@ namespace source
         static void GradeOpponent()
         {    
             GotQCorrect = oppR.Next(0, 1);
+            QotQCorrect += oppR.Next(1, 6)
+            GotQCorrect -= oppR.Next(-3, 3)
             
-            if (GotQCorrect == 1)
+            if (GotQCorrect <= 0)
             {
                 oppPoints++;
             }
